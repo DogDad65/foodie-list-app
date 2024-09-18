@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="/css/styles.css">
+
+<%- include('../partials/_navbar.ejs') %> <!-- Include Navbar -->
+
+<h1>Add New Recipe</h1>
+
+<form action="/users/<%= user._id %>/recipes" method="POST" class="form-container">
+  <div class="form-group">
+    <label for="title">Recipe Title:</label>
+    <input type="text" name="title" placeholder="Enter the recipe title" required />
+  </div>
+
+  <div class="form-group">
+    <label for="ingredients">Ingredients:</label>
+    <textarea name="ingredients" rows="4" placeholder="List the ingredients separated by commas" required></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="instructions">Instructions:</label>
+    <textarea name="instructions" rows="6" placeholder="Enter the cooking instructions" required></textarea>
+  </div>
+
+  <button type="submit" class="button">Add Recipe</button>
+</form>
+
+<%- include('../partials/footer.ejs') %> <!-- Include Footer -->
+
+

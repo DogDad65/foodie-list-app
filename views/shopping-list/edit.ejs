@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/css/styles.css" />
 
 <%- include('../partials/_navbar.ejs') %> <!-- Include Navbar -->
 
@@ -19,7 +19,7 @@
 </form>
 
 <form action="/users/<%= user._id %>/shopping-list/<%= food._id %>?_method=DELETE" method="POST">
-  <button type="submit" class="button delete-button">Delete Item</button>
+  <button type="submit" class="button delete-button">Delete</button>
 </form>
 
-<%- include('../partials/footer.ejs') %> <!-- Include Footer -->
+<%- include('../partials/footer.ejs') %>

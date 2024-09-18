@@ -1,60 +1,65 @@
-const dotenv = require('dotenv');
-dotenv.config();
 const express = require('express');
-const mongoose = require('mongoose');
+const session = require('express-session');
 const methodOverride = require('method-override');
 const morgan = require('morgan');
-const session = require('express-session');
-const authController = require('./controllers/auth.js');
-const foodsController = require('./controllers/foods');
-const isSignedIn = require('./middleware/is-signed-in'); // Import the middleware
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
+// Import controllers
+const authController = require('./controllers/auth');
+const shoppingListController = require('./controllers/shopping-list');
+const recipesController = require('./controllers/recipes');
+const usersController = require('./controllers/users');
+const isSignedIn = require('./middleware/is-signed-in');
+
+dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
-
-// MongoDB connection
-mongoose.connect(process.env.MONGODB_URI);
-
-
-mongoose.connection.on('connected', () => {
-  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
-});
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
-app.use(morgan('dev')); // Optional for logging requests
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+app.use(morgan('dev'));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+}));
+app.use(express.static('public'));
 
-// Route for homepage
-app.get('/', (req, res) => {
-  res.render('index.ejs', {
-    user: req.session.user,
-  });
+// Middleware to pass user data to all views
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null; // Set `user` to `null` if not logged in
+  next();
 });
 
-// Route for VIP lounge (only accessible if signed in)
-app.get('/vip-lounge', (req, res) => {
-  if (req.session.user) {
-    res.send(`Welcome to the party, ${req.session.user.username}.`);
-  } else {
-    res.send('Sorry, no guests allowed.');
-  }
+// MongoDB connection
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.connection.on('connected', () => {
+  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-// Auth controller
+// Set view engine
+app.set('view engine', 'ejs');
+
+// Routes
 app.use('/auth', authController);
+app.use('/users', usersController);
+app.use('/users/:userId/shopping-list', isSignedIn, shoppingListController);
+app.use('/users/:userId/recipes', isSignedIn, recipesController);
 
-// Foods controller with authentication check
-app.use('/users/:userId/foods', isSignedIn, foodsController);
+// Home route
+app.get('/', (req, res) => {
+  res.render('index');
+});
 
-// Start the server
+// Error handling middleware (make sure this is at the end)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
+
+// Only one instance of `app.listen()`
 app.listen(port, () => {
-  console.log(`The express app is ready on port ${port}!`);
+  console.log(`App listening on port ${port}`);
 });

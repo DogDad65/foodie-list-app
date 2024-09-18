@@ -1,0 +1,26 @@
+<!-- views/recipes/show.ejs -->
+<link rel="stylesheet" href="/css/styles.css">
+
+<%- include('../partials/_navbar.ejs') %> <!-- Include Navbar -->
+
+<h1><%= recipe.title %></h1>
+
+<ul class="recipe-ingredients">
+  <% recipe.ingredients.forEach(ingredient => { %>
+    <li>
+      <span><%= ingredient %></span>
+      <!-- Add button to add ingredient to shopping list -->
+      <form
+        action="/users/<%= user._id %>/shopping-list"
+        method="POST"
+        style="display:inline;"
+      >
+        <input type="hidden" name="name" value="<%= ingredient %>">
+        <input type="hidden" name="quantity" value="1">
+        <button type="submit" class="button add-button">Add to Shopping List</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+
+<%- include('../partials/footer.ejs') %> <!-- Include Footer -->
