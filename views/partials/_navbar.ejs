@@ -2,11 +2,21 @@
 <link rel="stylesheet" href="/css/styles.css">
 
 <nav class="navbar">
-    <ul class="navbar-list">
-      <li><a href="/auth/dashboard">Dashboard</a></li>
-      <li><a href="/users/community">Community Recipes</a></li>
-      <li><a href="/users/shopping-list">Shopping List</a></li>
-      <li><a href="/auth/sign-out">Sign Out</a></li>
-    </ul>
-  </nav>
-  
+  <ul class="navbar-list">
+    <li><a href="/auth/dashboard">Dashboard</a></li>
+    <li>
+      <!-- Community Recipes should point directly to /community -->
+      <a href="/community">Community Recipes</a>
+    </li>
+    <li>
+      <% if (user) { %>
+        <a href="/users/<%= user._id %>/shopping-list">Shopping List</a>
+      <% } else { %>
+        <a href="/auth/sign-in">Shopping List</a>
+      <% } %>
+    </li>
+    <li><a href="/auth/sign-out">Sign Out</a></li>
+  </ul>
+</nav>
+
+

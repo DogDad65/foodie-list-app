@@ -3,18 +3,19 @@
 <link rel="stylesheet" href="/css/styles.css">
 
 <%- include('partials/_navbar') %>
+
 <h1>Shopping List</h1>
 <form action="/users/<%= user._id %>/shopping-list/update" method="POST">
   <ul>
-    <% ingredients.forEach(ingredient => { %>
+    <% shoppingList.forEach(item => { %> <!-- Loop through shoppingList instead of undefined ingredients -->
       <li>
         <input type="checkbox" name="purchased" value="<%= item._id %>">
-        <label><%= ingredient %></label>
+        <label><%= item.name %></label> <!-- Assuming the item name is what should be displayed -->
       </li>
     <% }) %>
   </ul>
-  <button type="submit">Update List</button>
 </form>
+
 <a href="/auth/dashboard">Back to Dashboard</a>
 
 <%- include('partials/_footer') %>

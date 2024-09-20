@@ -1,17 +1,19 @@
-<!-- Example: dashboard.ejs -->
 <%- include('partials/_navbar') %>
 
-<div class="container">
+<div class="dashboard-container">
   <h1>Welcome, <%= user.realName || user.username %>!</h1>
   <h2>Your Recipes</h2>
-  <a href="/users/<%= user._id %>/recipes/new" class="button">Add New Recipe</a>
-  <ul>
+  <a href="/users/<%= user._id %>/recipes/new" class="button primary-button">Add New Recipe</a>
+  
+  <ul class="recipe-list">
     <% recipes.forEach(recipe => { %>
-      <li>
-        <a href="/users/<%= user._id %>/recipes/<%= recipe._id %>"><%= recipe.title %></a>
-        <a href="/users/<%= user._id %>/shopping-list">Shopping List</a>
-        <form action="/users/<%= user._id %>/recipes/<%= recipe._id %>?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="button">Delete</button>
+      <li class="recipe-item">
+        <div class="recipe-info">
+          <a href="/users/<%= user._id %>/recipes/<%= recipe._id %>" class="recipe-link"><%= recipe.title %></a>
+          <a href="/users/<%= user._id %>/shopping-list" class="shopping-list-link">Shopping List</a>
+        </div>
+        <form action="/users/<%= user._id %>/recipes/<%= recipe._id %>?_method=DELETE" method="POST" class="delete-form">
+          <button type="submit" class="button delete-button">Delete</button>
         </form>
       </li>
     <% }) %>

@@ -1,26 +1,47 @@
 const express = require('express');
 const router = express.Router();
-const ShoppingList = require('../models/shoppingList'); // Corrected import statement
+const ShoppingList = require('../models/shoppingList');
+const isSignedIn = require('../middleware/isSignedIn');
 
-console.log('Resolved path:', require.resolve('../models/shoppingList'));
 
-// Route to display the shopping list
-router.get('/', async (req, res) => {
+router.get('/', isSignedIn, async (req, res) => {
   try {
-    // Fetch the shopping list items from the database
+    // Fetch shopping list items for the specific user
     const shoppingList = await ShoppingList.find({ userId: req.session.user._id });
-    const ingredients = shoppingList.map(item => item.name); 
-    res.render('shopping-list', { shoppingList, ingredients, user: req.session.user });
+
+    // Log the fetched items to verify data
+    console.log('Fetched shopping list items:', shoppingList);
+
+    // Render the shopping list page with fetched data
+    res.render('shopping-list', { shoppingList, user: req.session.user });
   } catch (error) {
     console.error('Error loading shopping list:', error);
     res.status(500).send('Error loading shopping list.');
   }
 });
 
-// Route to handle updating the shopping list
+// Route to handle user registration
 router.post('/update', async (req, res) => {
-  const purchasedItems = req.body.purchasedItems || [];
-  res.redirect(`/users/${req.session.user._id}/shopping-list`);
+  try {
+    const { username, password } = req.body;
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).send('User already exists');
+    }
+
+    // Create and save the new user
+    const newUser = new User({ username, password });
+    await newUser.save();
+
+    // Log the user in after successful registration
+    req.session.user = newUser;
+    res.redirect('/auth/dashboard'); // Redirect to user dashboard or desired page
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).send('Error creating user.');
+  }
 });
 
 module.exports = router;

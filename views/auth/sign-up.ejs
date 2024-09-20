@@ -1,10 +1,29 @@
 <!-- views/auth/sign-up.ejs -->
 <link rel="stylesheet" href="/css/styles.css">
 
-<form action="/auth/sign-up" method="POST">
-  <input type="text" name="username" placeholder="Username" required>
-  <input type="text" name="realName" placeholder="Real Name" required>
-  <input type="password" name="password" placeholder="Password" required>
-  <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
-  <button type="submit">Sign Up</button>
-</form>
+<%- include('../partials/_navbar') %>
+
+<div class="sign-in-container"> <!-- Reuse the sign-in-container class for consistency -->
+  <form action="/auth/sign-up" method="POST" class="sign-in-form"> <!-- Reuse sign-in-form class -->
+    <h1>Sign Up</h1>
+    <div>
+      <label for="realName">Real Name:</label>
+      <input type="text" id="realName" name="realName" required>
+    </div>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+    </div>
+    <button type="submit">Sign Up</button>
+  </form>
+</div>
+
+<%- include('../partials/_footer') %>
