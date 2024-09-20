@@ -1,33 +1,12 @@
 <!-- views/index.ejs -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Page</title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  <%- include('./partials/_navbar.ejs') %>
+<link rel="stylesheet" href="/css/styles.css">
+<%- include('partials/_navbar') %> <!-- Include the navbar if needed -->
 
-  <div class="container">
-    <div class="welcome-message">
-      <% if (user) { %>
-      <h1>Welcome to The FoodieList, <%= user.username %>!</h1>
-      <p>
-        <a href="/auth/sign-out" class="button">Sign out</a>
-      </p>
-      <% } else { %>
-      <h1>Welcome to The FoodieList, guest.</h1>
-      <p>
-        <a href="/auth/sign-up" class="button">Sign up</a> or
-        <a href="/auth/sign-in" class="button">Sign in</a>.
-      </p>
-      <% } %>
-    </div>
-  </div>
-  <%- include('./partials/footer.ejs') %>
-</body>
-</html>
+<div class="landing-page">
+  <h1>Welcome to FoodieLists!</h1>
+  <p>Your go-to app for managing recipes and shopping lists.</p>
+  <a href="/auth/sign-up" class="button">Sign Up</a>
+  <a href="/auth/sign-in" class="button">Sign In</a>
+</div>
 
-
+<%- include('partials/_footer') %> <!-- Include the footer -->

@@ -1,81 +1,116 @@
-const express = require("express");
+// controllers/recipes.js
+const express = require('express');
 const router = express.Router();
-const User = require("../models/user");
+const Recipe = require('../models/recipe');
+const User = require('../models/user');
+const ShoppingItem = require('../models/shoppingList');
+const isSignedIn = require('../middleware/isSignedIn');
 
-// Index route to display logged-in user's recipes
-router.get("/", async (req, res) => {
+// New recipe form
+router.get('/new', isSignedIn, (req, res) => {
+  res.render('recipes/new', { user: req.session.user });
+});
+
+// Community page route
+router.get('/community', async (req, res) => {
   try {
-    const user = await User.findById(req.session.user._id);
-    res.render("recipes/index", { recipes: user.recipes });
-  } catch (err) {
-    res.status(500).send(err);
+  
+    const recipes = await Recipe.find().populate('userId', 'realName username'); 
+
+    res.render('recipes/community', { recipes });
+  } catch (error) {
+    console.error('Error loading community page:', error);
+    res.status(500).send('Error loading community page.');
   }
 });
 
-// New recipe form
-router.get("/new", (req, res) => {
-  res.render("recipes/new");
-});
-
-// Create a new recipe
-router.post("/", async (req, res) => {
+// Show recipe
+router.get('/:recipeId', async (req, res) => {
   try {
-    const user = await User.findById(req.session.user._id);
-    user.recipes.push(req.body); // Add the new recipe
-    await user.save();
-    res.redirect(`/users/${user._id}/recipes`);
-  } catch (err) {
-    res.status(500).send(err);
+    const recipe = await Recipe.findById(req.params.recipeId);
+    res.render('recipes/show', { recipe, user: req.session.user });
+  } catch (error) {
+    console.error('Error fetching recipe:', error);
+    res.redirect('/auth/dashboard');
   }
 });
 
 // Edit recipe form
-router.get("/:recipeId/edit", async (req, res) => {
+router.get('/:recipeId/edit', isSignedIn, async (req, res) => {
   try {
-    const user = await User.findById(req.session.user._id);
-    const recipe = user.recipes.id(req.params.recipeId);
-    res.render("recipes/edit", { recipe });
-  } catch (err) {
-    res.status(500).send(err);
+    const recipe = await Recipe.findById(req.params.recipeId);
+    res.render('recipes/edit', { recipe, user: req.session.user });
+  } catch (error) {
+    console.error('Error loading edit form:', error);
+    res.redirect('/auth/dashboard');
   }
 });
 
 
-
-// Update a recipe
-router.put("/:recipeId", async (req, res) => {
+// Update recipe
+router.put('/:recipeId', async (req, res) => {
   try {
-    const user = await User.findById(req.session.user._id);
-    const recipe = user.recipes.id(req.params.recipeId);
-    recipe.set(req.body); // Update recipe data
-    await user.save();
-    res.redirect(`/users/${user._id}/recipes`);
-  } catch (err) {
-    res.status(500).send(err);
+    const { title, ingredients, instructions } = req.body;
+    await Recipe.findByIdAndUpdate(req.params.recipeId, {
+      title,
+      ingredients: ingredients.split(',').map(item => item.trim()),
+      instructions
+    });
+    res.redirect(`/users/${req.session.user._id}/recipes/${req.params.recipeId}`);
+  } catch (error) {
+    console.error('Error updating recipe:', error);
+    res.redirect('/auth/dashboard');
+  }
+});
+
+
+// Create recipe with shopping list addition
+router.post('/', isSignedIn, async (req, res) => {
+  try {
+    const { title, ingredients, instructions } = req.body;
+    const ingredientArray = ingredients.split(',').map(item => item.trim());
+    const recipe = await Recipe.create({
+      title,
+      ingredients: ingredientArray,
+      instructions,
+      userId: req.session.user._id
+    });
+
+    // Add each ingredient to the shopping list
+    await Promise.all(
+      ingredientArray.map(async ingredient => {
+        await ShoppingItem.create({ name: ingredient, userId: req.session.user._id });
+      })
+    );
+
+    await User.findByIdAndUpdate(req.session.user._id, { $push: { recipes: recipe._id } });
+    res.redirect('/auth/dashboard');
+  } catch (error) {
+    console.error('Error creating recipe:', error);
+    res.redirect('/recipes/new');
   }
 });
 
 // Delete a recipe
-router.delete('/:recipeId', async (req, res) => {
+router.delete('/:recipeId', isSignedIn, async (req, res) => {
   try {
-    console.log("Attempting to delete recipe with ID:", req.params.recipeId);
-    const user = await User.findById(req.session.user._id);
-    
-    if (!user) {
-      console.log("User not found");
-      return res.status(404).send("User not found");
+    // Find and delete the recipe
+    const recipe = await Recipe.findByIdAndDelete(req.params.recipeId);
+
+    if (!recipe) {
+      return res.status(404).send('Recipe not found');
     }
 
-    // Use pull() to remove the recipe by ID from the user's recipes array
-    user.recipes.pull(req.params.recipeId);
-    await user.save(); // Save the changes to the user document
-    console.log("Recipe removed successfully");
+    // Remove the recipe reference from the user
+    await User.findByIdAndUpdate(req.session.user._id, { $pull: { recipes: req.params.recipeId } });
 
-    res.redirect(`/users/${user._id}/recipes`);
-  } catch (err) {
-    console.error("Error occurred while deleting the recipe:", err);
-    res.status(500).send("An error occurred while deleting the recipe.");
+    // Redirect back to the dashboard or wherever appropriate
+    res.redirect('/auth/dashboard');
+  } catch (error) {
+    console.error('Error deleting recipe:', error);
+    res.redirect('/auth/dashboard');
   }
 });
 
 module.exports = router;
+

@@ -1,0 +1,18 @@
+<!-- views/recipes/community.ejs -->
+<%- include('../partials/_navbar') %>
+<link rel="stylesheet" href="/css/styles.css">
+
+<h1>Community Recipes</h1>
+<ul>
+  <% recipes.forEach(recipe => { %>
+    <li>
+      <h2><%= recipe.title %></h2>
+      <p>By: <%= recipe.userId ? recipe.userId.realName || recipe.userId.username : 'Unknown' %></p>
+      <p>Ingredients: <%= recipe.ingredients.join(', ') %></p>
+      <p>Instructions: <%= recipe.instructions %></p>
+    </li>
+  <% }) %>
+</ul>
+<a href="/auth/dashboard">Back to Dashboard</a>
+
+<%- include('../partials/_footer') %>

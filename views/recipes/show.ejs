@@ -1,26 +1,23 @@
-<!-- views/recipes/show.ejs -->
+
+<%- include('../partials/_navbar') %>
 <link rel="stylesheet" href="/css/styles.css">
 
-<%- include('../partials/_navbar.ejs') %> <!-- Include Navbar -->
-
+<!-- views/recipes/show.ejs -->
 <h1><%= recipe.title %></h1>
 
-<ul class="recipe-ingredients">
+<h3>Ingredients Needed:</h3>
+<ul>
   <% recipe.ingredients.forEach(ingredient => { %>
-    <li>
-      <span><%= ingredient %></span>
-      <!-- Add button to add ingredient to shopping list -->
-      <form
-        action="/users/<%= user._id %>/shopping-list"
-        method="POST"
-        style="display:inline;"
-      >
-        <input type="hidden" name="name" value="<%= ingredient %>">
-        <input type="hidden" name="quantity" value="1">
-        <button type="submit" class="button add-button">Add to Shopping List</button>
-      </form>
-    </li>
+    <li><%= ingredient %></li>
   <% }) %>
 </ul>
 
-<%- include('../partials/footer.ejs') %> <!-- Include Footer -->
+<h3>Instructions:</h3>
+<ol>
+  <% recipe.instructions.split('\n').forEach(step => { %>
+    <li><%= step %></li>
+  <% }) %>
+</ol>
+
+<a href="/auth/dashboard">Back to Dashboard</a>
+
