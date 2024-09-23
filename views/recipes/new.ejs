@@ -1,20 +1,17 @@
 <%- include('../partials/_navbar') %>
 
-<div class="add-recipe-container">
+<div class="recipe-container">
   <h2>Add New Recipe</h2>
   <form action="/users/<%= user._id %>/recipes" method="POST" enctype="multipart/form-data">
     <input type="text" name="title" placeholder="Recipe Title" required>
     <textarea name="ingredients" rows="10" placeholder="Enter each ingredient on a new line" required></textarea>
     <textarea name="instructions" rows="10" placeholder="Instructions" required></textarea>
-    
     <!-- Image upload input -->
     <label for="image">Upload an Image (optional):</label>
     <input type="file" name="image" id="image" accept="image/*">
-    
-    <button type="submit">Add Recipe</button>
+    <!-- Move the button inside the form -->
+    <button type="submit" class="button primary-button">Add Recipe</button>
   </form>
 </div>
 
 <%- include('../partials/_footer') %>
-
-  

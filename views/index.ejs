@@ -1,12 +1,15 @@
 <!-- views/index.ejs -->
 <link rel="stylesheet" href="/css/styles.css">
-<%- include('partials/_navbar') %> <!-- Include the navbar if needed -->
+<%- include('partials/_navbar') %> 
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
 
 <div class="landing-page">
   <h1>Welcome to FoodieLists!</h1>
   <p>Your go-to app for managing recipes and shopping lists.</p>
-  <a href="/auth/sign-up" class="button">Sign Up</a>
-  <a href="/auth/sign-in" class="button">Sign In</a>
-</div>
+  <div class="button-container">
+    <a href="/auth/sign-up" class="button primary-button">Sign Up</a>
+    <a href="/auth/sign-in" class="button primary-button">Sign In</a>
+  </div>
+</div
 
-<%- include('partials/_footer') %> <!-- Include the footer -->
+<%- include('partials/_footer') %> 

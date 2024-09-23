@@ -4,18 +4,20 @@
 
 <%- include('partials/_navbar') %>
 
-<h1>Shopping List</h1>
-<form action="/users/<%= user._id %>/shopping-list/update" method="POST">
-  <ul>
-    <% shoppingList.forEach(item => { %> <!-- Loop through shoppingList instead of undefined ingredients -->
-      <li>
-        <input type="checkbox" name="purchased" value="<%= item._id %>">
-        <label><%= item.name %></label> <!-- Assuming the item name is what should be displayed -->
-      </li>
-    <% }) %>
-  </ul>
-</form>
+<div class="shopping-list-container">
+  <h1>Shopping List</h1>
+  <form action="/users/<%= user._id %>/shopping-list/update" method="POST">
+    <ul class="shopping-list">
+      <% shoppingList.forEach(item => { %> <!-- Loop through shoppingList -->
+        <li class="shopping-list-item">
+          <input type="checkbox" name="purchased" value="<%= item._id %>">
+          <label><%= item.name %></label> <!-- Display the item name -->
+        </li>
+      <% }) %>
+    </ul>
+  </form>
 
-<a href="/auth/dashboard">Back to Dashboard</a>
+  <a href="/auth/dashboard" class="button-link">Back to Dashboard</a>
+</div>
 
 <%- include('partials/_footer') %>

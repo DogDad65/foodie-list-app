@@ -1,40 +1,25 @@
 <!-- views/auth/sign-in.ejs -->
 <link rel="stylesheet" href="/css/styles.css">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
 
-<nav class="navbar">
-  <ul class="navbar-list">
-    <li><a href="/auth/dashboard">Dashboard</a></li>
-    <li>
-      <% if (user && user._id) { %>
-        <a href="/users/<%= user._id %>/community">Community Recipes</a>
-      <% } else { %>
-        <a href="/auth/sign-in">Community Recipes</a>
-      <% } %>
-    </li>
-    <li>
-      <% if (user && user._id) { %>
-        <a href="/users/<%= user._id %>/shopping-list">Shopping List</a>
-      <% } else { %>
-        <a href="/auth/sign-in">Shopping List</a>
-      <% } %>
-    </li>
-    <li><a href="/auth/sign-out">Sign Out</a></li>
-  </ul>
-</nav>
+<%- include('../partials/_navbar') %>
 
-<div class="sign-in-container">
-  <form action="/auth/sign-in" method="POST" class="sign-in-form">
-    <h1>Sign In</h1>
-    <div>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Sign In</button>
-  </form>
+<!-- Sign-In Page Container -->
+<div class="sign-in-page">
+  <div class="sign-in-container">
+    <form action="/auth/sign-in" method="POST" class="sign-in-form">
+      <h1>Sign In</h1>
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Sign In</button>
+    </form>
+  </div>
 </div>
 
 <%- include('../partials/_footer') %>

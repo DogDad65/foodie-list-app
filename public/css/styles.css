@@ -1,10 +1,38 @@
 /* Global Styles */
 body {
-  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   color: #333;
   background-color: #f8f9fa;
+  padding-top: 60px;
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  flex-direction: column;
+  display: flex;
+}
+
+/* Main Content Styling */
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 h1, h2, h3 {
@@ -18,6 +46,11 @@ p {
 
 /* Navigation Bar */
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background-color: #2c3e50;
   padding: 10px 20px;
 }
@@ -103,16 +136,21 @@ p {
   background-color: #5aa04e;
 }
 
-
 /* Hero / Landing Page */
 .landing-page {
-  text-align: center;
-  padding: 100px 20px;
-  background: url('https://images.unsplash.com/photo-1518735869015-566a18eae4be?q=80&w=2091&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat; /* Adjust image path */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1518735869015-566a18eae4be?q=80&w=2091&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+    center/cover no-repeat;
   color: white;
 }
 
 .landing-page h1 {
+  color: white;
   font-size: 3rem;
   margin-bottom: 10px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
@@ -122,31 +160,93 @@ p {
   font-size: 1.2rem;
 }
 
-.button {
+button {
   display: inline-block;
-  margin: 10px 5px;
   padding: 10px 20px;
-  background-color: #6bbf59;
-  color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
-  text-decoration: none;
   transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.primary-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.primary-button:hover {
+  background-color: #45a049;
 }
 
 .button:hover {
   background-color: #5aa04e;
 }
 
+/* Shopping List Container Styling */
+.shopping-list-container {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Shopping List Styling */
+.shopping-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Shopping List Item Styling */
+.shopping-list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Checkbox Styling */
+.shopping-list-item input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+/* Button Link Styling */
+.button-link {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #4caf50;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.button-link:hover {
+  background-color: #45a049;
+}
+
 /* Dashboard Container */
 .dashboard-container {
+  width: 80%;
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 80px;
+  box-sizing: border-box;
 }
 
 /* Heading Styles */
@@ -164,13 +264,15 @@ p {
 
 /* Button Styles */
 .button {
-  display: inline-block;
-  padding: 8px 16px;
-  margin: 10px 0;
-  border: none;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: #4caf50;
+  color: #fff;
+  text-decoration: none;
   border-radius: 4px;
-  cursor: pointer;
   transition: background-color 0.3s ease;
+  cursor: pointer;
+  text-align: center;
 }
 
 .primary-button {
@@ -185,6 +287,11 @@ p {
 .delete-button {
   background-color: #e74c3c;
   color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .delete-button:hover {
@@ -192,7 +299,32 @@ p {
 }
 
 /* Recipe List Styles */
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  position: sticky;
+  bottom: 0;
+  padding: 10px 0;
+}
+
+/* Print Styles */
+@media print {
+  .navbar,
+  .footer,
+  .actions {
+    display: none;
+  }
+  .recipe-container {
+    max-height: none;
+    overflow: visible;
+  }
+}
+
 .recipe-list {
+  width:100%;
   list-style: none;
   padding: 0;
 }
@@ -201,11 +333,13 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  margin-bottom: 10px;
+  width: 90%;
+  padding: 15px;
+  margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .recipe-info {
@@ -239,13 +373,33 @@ p {
   margin-left: 10px;
 }
 
-
 /* Community Page Styling */
 .community-container {
   max-width: 900px;
   margin: 40px auto;
   padding: 20px;
 }
+
+.edit-recipe-container {
+  width: 100%;
+  max-width: 800px; 
+  margin: 20px auto; 
+  padding: 20px; 
+  background-color: #ffffff; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+  display: flex;
+  flex-direction: column; 
+  gap: 15px; 
+}
+
+/* Form elements inside the containers */
+.edit-recipe-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 
 .recipe-list {
   list-style-type: none;
@@ -271,53 +425,95 @@ p {
   color: #6bbf59;
 }
 
-/* Add this to your styles.css */
+/* Recipe, Edit Recipe, and Add Recipe Container Styling */
+.recipe-container,
+.edit-recipe-container,
 .add-recipe-container {
-  max-width: 600px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
+/* Center the form heading */
+.recipe-container h2,
+.edit-recipe-container h2,
 .add-recipe-container h2 {
   text-align: center;
   color: #333;
+  margin-bottom: 20px;
 }
 
+/* Form layout inside the containers */
+.recipe-container form,
+.edit-recipe-container form,
 .add-recipe-container form {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
+/* Input, textarea, and button styling */
+.recipe-container input,
+.recipe-container textarea,
+.recipe-container button,
+.edit-recipe-container input,
+.edit-recipe-container textarea,
+.edit-recipe-container button,
 .add-recipe-container input,
 .add-recipe-container textarea,
 .add-recipe-container button {
-  margin: 10px 0;
-  padding: 10px;
+  margin: 5px 0;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
 }
 
-.add-recipe-container input[type="file"] {
-  border: none;
-  padding: 0;
-  margin-bottom: 15px;
+/* Textarea styling for better readability */
+.recipe-container textarea,
+.edit-recipe-container textarea,
+.add-recipe-container textarea {
+  min-height: 150px;
+  resize: vertical;
 }
 
+/* Button Styling */
+.recipe-container button,
+.edit-recipe-container button,
 .add-recipe-container button {
   background-color: #4caf50;
   color: white;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+  padding: 14px;
+  font-size: 1.1rem;
 }
 
+.recipe-container button:hover,
+.edit-recipe-container button:hover,
 .add-recipe-container button:hover {
   background-color: #45a049;
 }
 
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .recipe-container,
+  .edit-recipe-container,
+  .add-recipe-container {
+    max-width: 90%;
+    margin: 20px auto;
+  }
+}
 
 /* About Page Styling */
 .about-container {
@@ -342,22 +538,32 @@ p {
   line-height: 1.6;
 }
 
-
 /* Footer */
 .footer {
   background-color: #2c3e50;
-  color: #fff;
-  padding: 20px;
+  color: white;
   text-align: center;
-  margin-top: 20px;
+  padding: 10px 0;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  margin-top: auto;
 }
 
 .footer-nav a {
-  color: #ffeb3b;
+  color: #f39c12;
   margin: 0 10px;
   text-decoration: none;
 }
 
-.footer-nav a:hover {
-  color: #fff;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .navbar-list {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.container {
+  width: 95%;
 }

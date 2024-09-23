@@ -1,47 +1,24 @@
+// controllers/shopping-list.js
 const express = require('express');
 const router = express.Router();
 const ShoppingList = require('../models/shoppingList');
 const isSignedIn = require('../middleware/isSignedIn');
 
-
+// Fetch shopping list items for the logged-in user
 router.get('/', isSignedIn, async (req, res) => {
   try {
-    // Fetch shopping list items for the specific user
-    const shoppingList = await ShoppingList.find({ userId: req.session.user._id });
-
-    // Log the fetched items to verify data
-    console.log('Fetched shopping list items:', shoppingList);
-
-    // Render the shopping list page with fetched data
+    // Fetch items by user ID to ensure the correct data is pulled
+    const userId = req.session.user._id; // Ensure user ID is correct
+    console.log('Fetching shopping list for User ID:', userId);  // Debugging log
+    const shoppingList = await ShoppingList.find({ userId: userId });
+    console.log('Fetched shopping list items:', shoppingList); // Check fetched items
     res.render('shopping-list', { shoppingList, user: req.session.user });
   } catch (error) {
-    console.error('Error loading shopping list:', error);
-    res.status(500).send('Error loading shopping list.');
+    console.error('Error fetching shopping list:', error);
+    res.redirect('/auth/dashboard');
   }
 });
 
-// Route to handle user registration
-router.post('/update', async (req, res) => {
-  try {
-    const { username, password } = req.body;
-
-    // Check if the user already exists
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(400).send('User already exists');
-    }
-
-    // Create and save the new user
-    const newUser = new User({ username, password });
-    await newUser.save();
-
-    // Log the user in after successful registration
-    req.session.user = newUser;
-    res.redirect('/auth/dashboard'); // Redirect to user dashboard or desired page
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).send('Error creating user.');
-  }
-});
+// Ensure that the registration-related route is removed, as it does not belong here.
 
 module.exports = router;
