@@ -5,20 +5,20 @@ const Recipe = require("../models/recipe");
 const User = require("../models/user");
 const ShoppingList = require("../models/shoppingList");
 const isSignedIn = require("../middleware/isSignedIn");
-const multer = require('multer');
+const multer = require("multer");
 const upload = multer();
 
 // Fetch shopping list items for the logged-in user
-router.get('/', isSignedIn, async (req, res) => {
+router.get("/", isSignedIn, async (req, res) => {
   try {
-    const userId = req.session.user._id; 
-    console.log('Fetching shopping list for User ID:', userId);  
+    const userId = req.session.user._id;
+    console.log("Fetching shopping list for User ID:", userId);
     const shoppingList = await ShoppingList.find({ userId: userId }); // Fetch items by user ID
-    console.log('Fetched shopping list items:', shoppingList); // Check fetched items
-    res.render('shopping-list', { shoppingList, user: req.session.user });
+    console.log("Fetched shopping list items:", shoppingList); // Check fetched items
+    res.render("shopping-list", { shoppingList, user: req.session.user });
   } catch (error) {
-    console.error('Error fetching shopping list:', error);
-    res.redirect('/auth/dashboard');
+    console.error("Error fetching shopping list:", error);
+    res.redirect("/auth/dashboard");
   }
 });
 
@@ -63,33 +63,39 @@ router.get("/:recipeId/edit", isSignedIn, async (req, res) => {
   }
 });
 
-
 // Update recipe route
 router.put("/:recipeId", isSignedIn, async (req, res) => {
   try {
     const { title, ingredients, instructions } = req.body;
 
     // Split ingredients into an array
-    const ingredientArray = ingredients ? ingredients.split('\n').map((item) => item.trim()) : [];
+    const ingredientArray = ingredients
+      ? ingredients.split("\n").map((item) => item.trim())
+      : [];
 
     // Find and update the recipe
-    await Recipe.findByIdAndUpdate(req.params.recipeId, {
-      title,
-      ingredients: ingredientArray,
-      instructions,
-    }, { new: true }); // Ensure this option returns the updated document
+    await Recipe.findByIdAndUpdate(
+      req.params.recipeId,
+      {
+        title,
+        ingredients: ingredientArray,
+        instructions,
+      },
+      { new: true }
+    ); // Ensure this option returns the updated document
 
     // Redirect back to the show page after updating
-    res.redirect(`/users/${req.session.user._id}/recipes/${req.params.recipeId}`);
+    res.redirect(
+      `/users/${req.session.user._id}/recipes/${req.params.recipeId}`
+    );
   } catch (error) {
     console.error("Error updating recipe:", error);
     res.redirect("/auth/dashboard");
   }
 });
 
-
 // Create recipe with shopping list addition
-router.post('/', isSignedIn, upload.none(), async (req, res) => {
+router.post("/", isSignedIn, upload.none(), async (req, res) => {
   try {
     const { title, ingredients, instructions } = req.body;
 
@@ -98,10 +104,15 @@ router.post('/', isSignedIn, upload.none(), async (req, res) => {
       return res.status(400).send("Title and instructions are required.");
     }
 
-    const userId = req.session.user._id; 
-    console.log('Logged-in User ID during creation:', userId); 
+    const userId = req.session.user._id;
+    console.log("Logged-in User ID during creation:", userId);
 
-    const ingredientArray = ingredients ? ingredients.split('\n').map(item => item.trim()).filter(item => item) : [];
+    const ingredientArray = ingredients
+      ? ingredients
+          .split("\n")
+          .map((item) => item.trim())
+          .filter((item) => item)
+      : [];
 
     const recipe = await Recipe.create({
       title,
@@ -112,8 +123,8 @@ router.post('/', isSignedIn, upload.none(), async (req, res) => {
 
     await Promise.all(
       ingredientArray.map(async (ingredient) => {
-        console.log('Creating shopping list item for:', ingredient);
-        console.log('User ID during item creation:', userId);
+        console.log("Creating shopping list item for:", ingredient);
+        console.log("User ID during item creation:", userId);
 
         await ShoppingList.create({
           name: ingredient,
@@ -124,13 +135,12 @@ router.post('/', isSignedIn, upload.none(), async (req, res) => {
       })
     );
 
-    res.redirect('/auth/dashboard');
+    res.redirect("/auth/dashboard");
   } catch (error) {
-    console.error('Error creating recipe:', error);
-    res.redirect('/recipes/new');
+    console.error("Error creating recipe:", error);
+    res.redirect("/recipes/new");
   }
 });
-
 
 // Delete a recipe
 router.delete("/:recipeId", isSignedIn, async (req, res) => {

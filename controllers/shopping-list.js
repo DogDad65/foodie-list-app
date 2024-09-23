@@ -19,6 +19,5 @@ router.get('/', isSignedIn, async (req, res) => {
   }
 });
 
-// Ensure that the registration-related route is removed, as it does not belong here.
 
 module.exports = router;
