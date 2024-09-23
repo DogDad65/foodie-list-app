@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+
     <link rel="stylesheet" href="/public/CSS/styles.css">
     <title>Edit Recipe</title>
 </head>
@@ -15,7 +17,8 @@
     <!-- Main Content Area -->
     <div class="main-content">
         <h2>Edit Recipe</h2>
-        <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST" class="edit-recipe-container">
+        <!-- Update the action URL to include the user ID -->
+        <form action="/users/<%= user._id %>/recipes/<%= recipe._id %>?_method=PUT" method="POST" class="edit-recipe-container">
             <input type="text" name="title" value="<%= recipe.title %>" required>
             <textarea name="ingredients" rows="5" required><%= recipe.ingredients.join('\n') %></textarea>
             <textarea name="instructions" rows="8" required><%= recipe.instructions %></textarea>
@@ -28,4 +31,3 @@
 
 </body>
 </html>
-
