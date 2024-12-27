@@ -1,6 +1,6 @@
 # FoodieLists
 
-![FoodieLists Screenshot](FoodieListApp.png) 
+![FoodieLists Screenshot](link-to-your-screenshot.png) <!-- Replace with actual screenshot link -->
 
 ## Description
 **FoodieLists** is a web application designed for managing recipes and shopping lists. Users can create, edit, delete, and view their personal recipes and maintain a shopping list directly linked to their recipe ingredients.
@@ -10,7 +10,7 @@ I developed this app because of my passion for cooking and the need to have a pe
 
 ## Getting Started
 ### Live Application
-- [FoodieLists Live App](link-to-deployed-app) 
+- [FoodieLists Live App](link-to-deployed-app) <!-- Replace with the live link -->
 
 ### Installation
 To run the app locally, follow these steps:
@@ -21,9 +21,12 @@ To run the app locally, follow these steps:
 5. Visit `http://localhost:3000` in your browser.
 
 ### Planning Materials
-- [Trello Board](https://trello.com/b/Mf2cyz1z/recipe-manager-app) 
+- [Wireframes](link-to-wireframes) <!-- Include a link if available -->
+- [ERD](link-to-ERD) <!-- Include a link if available -->
+- [Trello Board](link-to-planning-board) <!-- Include a link if available -->
 
 ## Attributions
+- **Icons:** Icons sourced from [Font Awesome](https://fontawesome.com/).
 - **Images:** Some images used are from [Unsplash](https://unsplash.com/).
 - **Fonts:** Fonts imported from [Google Fonts](https://fonts.google.com/).
 
@@ -37,7 +40,6 @@ To run the app locally, follow these steps:
 - Add user ratings for recipes.
 - Implement an advanced search filter for community recipes.
 - Allow users to upload images for each recipe.
-- Update format and style.
 
 ## License
 This project is licensed under the MIT License.

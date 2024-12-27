@@ -1,11 +1,10 @@
-// server.js
 const express = require("express");
+const router = express.Router();
 const session = require("express-session");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path = require("path");
-
 
 // Import controllers
 const authController = require("./controllers/auth");
@@ -31,15 +30,15 @@ app.use(express.static("public"));
 
 const Recipe = require("./models/recipe");
 
-app.get("/community", isSignedIn, async (req, res) => {
-  try {
-    const recipes = await Recipe.find().populate("userId", "realName username");
-    res.render("recipes/community", { recipes, user: req.session.user });
-  } catch (error) {
-    console.error("Error loading community page:", error);
-    res.status(500).send("Error loading community page.");
-  }
-});
+// app.get("/community", isSignedIn, async (req, res) => {
+//   try {
+//     const recipes = await Recipe.find().populate("userId", "realName username");
+//     res.render("recipes/community", { recipes, user: req.session.user });
+//   } catch (error) {
+//     console.error("Error loading community page:", error);
+//     res.status(500).send("Error loading community page.");
+//   }
+// });
 
 app.get("/about", (req, res) => {
   res.render("about", { user: req.session.user || null });

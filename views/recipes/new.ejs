@@ -1,16 +1,27 @@
 <%- include('../partials/_navbar') %>
 
-<div class="recipe-container">
+<div class="container recipe-container">
   <h2>Add New Recipe</h2>
   <form action="/users/<%= user._id %>/recipes" method="POST" enctype="multipart/form-data">
-    <input type="text" name="title" placeholder="Recipe Title" required>
-    <textarea name="ingredients" rows="10" placeholder="Enter each ingredient on a new line" required></textarea>
-    <textarea name="instructions" rows="10" placeholder="Instructions" required></textarea>
-    <!-- Image upload input -->
-    <label for="image">Upload an Image (optional):</label>
-    <input type="file" name="image" id="image" accept="image/*">
-    <!-- Move the button inside the form -->
-    <button type="submit" class="button primary-button">Add Recipe</button>
+    <div class="form-group">
+      <label for="title">Recipe Title:</label>
+      <input type="text" name="title" id="title" placeholder="Enter recipe title" required>
+    </div>
+    <div class="form-group">
+      <label for="ingredients">Ingredients:</label>
+      <textarea name="ingredients" id="ingredients" rows="5" placeholder="Enter each ingredient on a new line" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="instructions">Instructions:</label>
+      <textarea name="instructions" id="instructions" rows="5" placeholder="Enter recipe instructions" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">Upload an Image (optional):</label>
+      <input type="file" name="image" id="image" accept="image/*">
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="button primary-button">Add Recipe</button>
+    </div>
   </form>
 </div>
 

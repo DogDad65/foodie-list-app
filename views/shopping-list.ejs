@@ -1,23 +1,39 @@
-<!-- views/shopping-list.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Shopping List</title>
 
-<link rel="stylesheet" href="/css/styles.css">
+  <!-- Pass the userId to JavaScript -->
+  <script>
+    const userId = "<%= userId %>";
+  </script>
+</head>
+<body>
+  <%- include('partials/_navbar') %>
 
-<%- include('partials/_navbar') %>
-
-<div class="shopping-list-container">
-  <h1>Shopping List</h1>
-  <form action="/users/<%= user._id %>/shopping-list/update" method="POST">
+  <div class="shopping-list-container">
+    <h1>Shopping List</h1>
     <ul class="shopping-list">
-      <% shoppingList.forEach(item => { %> <!-- Loop through shoppingList -->
-        <li class="shopping-list-item">
-          <input type="checkbox" name="purchased" value="<%= item._id %>">
-          <label><%= item.name %></label> <!-- Display the item name -->
+      <% shoppingList.forEach(item => { %>
+        <li class="shopping-list-item" data-id="<%= item._id %>">
+          <input
+            type="checkbox"
+            class="shopping-list-checkbox"
+            <%= item.purchased ? "checked" : "" %>
+          >
+          <label><%= item.name %> (<%= item.quantity %>)</label>
         </li>
       <% }) %>
     </ul>
-  </form>
+    <a href="/auth/dashboard" class="button-link">Back to Dashboard</a>
+  </div>
 
-  <a href="/auth/dashboard" class="button-link">Back to Dashboard</a>
-</div>
+  <%- include('partials/_footer') %>
 
-<%- include('partials/_footer') %>
+  <!-- Link to your shopping list JavaScript -->
+  <script src="/js/shopping-list.js"></script>
+</body>
+</html>

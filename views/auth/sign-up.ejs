@@ -1,29 +1,29 @@
-<!-- views/auth/sign-up.ejs -->
 <link rel="stylesheet" href="/css/styles.css">
 <%- include('../partials/_navbar') %>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
 
-<div class="sign-in-container"> <!-- Reuse the sign-in-container class for consistency -->
-  <form action="/auth/sign-up" method="POST" class="sign-in-form"> <!-- Reuse sign-in-form class -->
-    <h1>Sign Up</h1>
-    <div>
-      <label for="realName">Real Name:</label>
-      <input type="text" id="realName" name="realName" required>
-    </div>
-    <div>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <div>
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required>
-    </div>
-    <button type="submit">Sign Up</button>
-  </form>
+<div class="sign-in-page">
+  <div class="sign-in-container">
+    <form action="/auth/sign-up" method="POST" class="sign-in-form">
+      <h1>Sign Up</h1>
+      <div>
+        <label for="realName">Real Name:</label>
+        <input type="text" id="realName" name="realName" placeholder="Enter your full name" required>
+      </div>
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Choose a username" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Create a password" required>
+      </div>
+      <div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
 </div>
 
 <%- include('../partials/_footer') %>
