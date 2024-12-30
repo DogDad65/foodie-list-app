@@ -1,10 +1,8 @@
 <link rel="stylesheet" href="/css/styles.css">
-<%- include('partials/_navbar') %>
+<%- include('../partials/_navbar') %>
 
-<div class="landing-page">
-  <h1>Welcome to Holly's Sweet Start!</h1>
-  <p>Your go-to platform for beginner-friendly baking recipes and tips.</p>
-  <h2>Featured Recipes</h2>
+<div class="recipes-container">
+  <h2>All Recipes</h2>
   <div class="recipes-grid">
     <% recipes.forEach(recipe => { %>
       <div class="recipe-card">
@@ -16,4 +14,4 @@
   </div>
 </div>
 
-<%- include('partials/_footer') %>
+<%- include('../partials/_footer') %>

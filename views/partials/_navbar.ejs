@@ -1,18 +1,9 @@
-<!-- views/partials/_navbar.ejs -->
 <link rel="stylesheet" href="/css/styles.css">
 
 <nav class="navbar">
-  <span class="navbar-logo">Holly's Sweet Start</span>
   <ul class="navbar-list">
-    <li><a href="/auth/dashboard">Dashboard</a></li>
-    <li>
-      <% if (user) { %>
-        <a href="/users/<%= user._id %>/shopping-list">Shopping List</a>
-      <% } else { %>
-        <a href="/auth/sign-in">Shopping List</a>
-      <% } %>
-    </li>
-    <li><a href="/auth/sign-out">Sign Out</a></li>
+    <li><a href="/">Home</a></li>
+    <li><a href="/recipes">Recipes</a></li>
+    <li><a href="/about">About</a></li>
   </ul>
 </nav>
-

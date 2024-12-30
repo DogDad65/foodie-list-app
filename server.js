@@ -1,10 +1,9 @@
 const express = require("express");
-const router = express.Router();
 const session = require("express-session");
 const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const path = require("path");
+const Recipe = require("./models/recipe"); // Import Recipe model
 
 // Import controllers
 const authController = require("./controllers/auth");
@@ -28,22 +27,6 @@ app.use(
 );
 app.use(express.static("public"));
 
-const Recipe = require("./models/recipe");
-
-// app.get("/community", isSignedIn, async (req, res) => {
-//   try {
-//     const recipes = await Recipe.find().populate("userId", "realName username");
-//     res.render("recipes/community", { recipes, user: req.session.user });
-//   } catch (error) {
-//     console.error("Error loading community page:", error);
-//     res.status(500).send("Error loading community page.");
-//   }
-// });
-
-app.get("/about", (req, res) => {
-  res.render("about", { user: req.session.user || null });
-});
-
 // MongoDB connection
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -59,16 +42,35 @@ app.use((req, res, next) => {
   next();
 });
 
-// Register routes
+// Public routes (no `isSignedIn`)
+app.get("/", async (req, res) => {
+  try {
+    const recipes = await Recipe.find(); // Fetch all recipes from the database
+    res.render("index", { recipes }); // Pass recipes to the landing page
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    res.status(500).send("Error loading landing page");
+  }
+});
+
+app.get("/recipes", async (req, res) => {
+  try {
+    const recipes = await Recipe.find(); // Fetch all recipes
+    res.render("recipes/index", { recipes }); // Render the recipes page
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+    res.status(500).send("Error fetching recipes");
+  }
+});
+
+app.get("/about", (req, res) => {
+  res.render("about");
+});
+
+// Private routes (require `isSignedIn`)
 app.use("/auth", authController);
 app.use("/users/:userId/recipes", isSignedIn, recipesController);
 app.use("/users/:userId/shopping-list", isSignedIn, shoppingListController);
-app.use("/community", recipesController); // Ensure this registration is correct
-
-// Home route
-app.get("/", (req, res) => {
-  res.render("index");
-});
 
 // Start the server
 app.listen(port, () => {
