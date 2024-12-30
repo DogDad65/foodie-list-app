@@ -1,3 +1,4 @@
+/* ===== Color Variables ===== */
 :root {
   --brand-purple: #B100FF;
   --brand-light-green: #dcfee4;
@@ -5,18 +6,17 @@
   --brand-dark-purple: #8e00cc;
   --brand-white: #ffffff;
   --brand-mint: #aafdbe;
-
-  /* Additional helper colors for shades */
   --brand-gray: #f4f4f4;
   --brand-dark-gray: #333333;
-  --brand-highlight: #ffe0ff; /* Soft highlight for sections */
+  --brand-highlight: #ffe0ff;
 }
 
-/* Body and general text */
+/* ===== General Styles ===== */
 body {
   background-color: var(--brand-light-green);
   color: var(--brand-dark-purple);
   font-family: 'Arial', sans-serif;
+  text-align: center;
   margin: 0;
   padding: 0;
 }
@@ -37,7 +37,7 @@ a:hover {
   color: var(--brand-dark-purple);
 }
 
-/* Navbar styles */
+/* ===== Navbar ===== */
 .navbar {
   display: flex;
   justify-content: flex-end;
@@ -56,10 +56,6 @@ a:hover {
   padding: 0;
 }
 
-.navbar-list li {
-  display: inline;
-}
-
 .navbar-list a {
   color: var(--brand-white);
   text-decoration: none;
@@ -71,63 +67,119 @@ a:hover {
   color: var(--brand-light-green);
 }
 
-/* Hero Section */
-.hero {
-  text-align: center;
-  padding: 50px 20px;
-  background-color: var(--brand-light-green);
+/* ===== Landing Page Styles ===== */
+.landing-page .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: linear-gradient(to bottom, var(--brand-purple), var(--brand-light-green));
+  color: var(--brand-white);
+  border-radius: 0 0 20px 20px;
 }
 
-.hero-logo {
-  height: 150px;
+
+.landing-page .logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px; /* Reduce space if necessary */
+  background: radial-gradient(circle, var(--brand-highlight) 40%, transparent 70%);
+  border-radius: 50%;
+  padding: 30px; /* Adjust as needed */
+}
+
+.landing-page .landing-logo {
+  max-width: 180px; /* Adjust logo size */
   width: auto;
-  margin-bottom: 20px;
+  filter: drop-shadow(0 0 10px var(--brand-light-purple));
+  animation: pulse 3s infinite;
 }
 
-.hero h1 {
-  color: var(--brand-purple);
-  font-size: 2.5rem;
+.landing-page .logo-tagline {
+  margin-top: 20px; /* Consistent space between logo and tagline */
+  font-size: 1.4rem;
+  color: var(--brand-dark-purple);
+  font-weight: bold;
+}
+
+.landing-page .hero p {
+  color: var(--brand-dark-purple);
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 20px auto;
+  max-width: 700px; /* Restrict paragraph width for better readability */
+  line-height: 1.5; /* Add line spacing for readability */
+}
+
+/* ===== Recipes Section ===== */
+.recipes-container {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px; /* Keep grid gaps consistent */
+  padding: 20px;
+}
+
+.recipe-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Align content inside the card */
+  background-color: var(--brand-white);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.recipe-card img {
+  max-width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
   margin-bottom: 10px;
 }
 
-.hero p {
-  color: var(--brand-dark-purple);
+.recipe-card h3 {
+  color: var(--brand-purple);
   font-size: 1.2rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.primary-button {
+.recipe-card .button-link {
   padding: 10px 20px;
   background-color: var(--brand-purple);
   color: var(--brand-white);
   text-decoration: none;
   border-radius: 5px;
-  font-size: 1.2rem;
+  display: inline-block;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.primary-button:hover {
+.recipe-card .button-link:hover {
   background-color: var(--brand-light-purple);
   transform: scale(1.05);
 }
 
-
-/* Footer styles */
+/* ===== Footer ===== */
 footer {
   background-color: var(--brand-gray);
   color: var(--brand-dark-gray);
   text-align: center;
   padding: 10px;
   font-size: 0.9rem;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
 }
 
 footer a {
@@ -137,50 +189,4 @@ footer a {
 
 footer a:hover {
   color: var(--brand-light-purple);
-}
-
-.recipes-container {
-  padding: 20px;
-  text-align: center;
-}
-
-.recipes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.recipe-card {
-  background-color: var(--brand-white);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.recipe-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.recipe-card h3 {
-  color: var(--brand-purple);
-  margin-bottom: 10px;
-}
-
-.recipe-card a {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: var(--brand-purple);
-  color: var(--brand-white);
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.recipe-card a:hover {
-  background-color: var(--brand-light-purple);
-  transform: scale(1.05);
 }
