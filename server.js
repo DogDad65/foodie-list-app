@@ -45,8 +45,8 @@ app.use((req, res, next) => {
 // Public routes (no `isSignedIn`)
 app.get("/", async (req, res) => {
   try {
-    const recipes = await Recipe.find(); // Fetch all recipes from the database
-    res.render("index", { recipes }); // Pass recipes to the landing page
+    const recipes = await Recipe.find(); // Fetch recipes for the homepage
+    res.render("index", { recipes }); // Render the homepage with recipes
   } catch (error) {
     console.error("Error fetching recipes:", error);
     res.status(500).send("Error loading landing page");
