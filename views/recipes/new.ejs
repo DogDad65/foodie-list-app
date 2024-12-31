@@ -1,7 +1,6 @@
 <%- include('../partials/_navbar') %>
-
-<div class="container">
-  <h1>Create a New Recipe</h1>
+<link rel="stylesheet" href="/css/styles.css" />
+<h1>Create a New Recipe</h1>
 <form action="/recipes" method="POST">
   <label for="title">Recipe Title:</label>
   <input type="text" id="title" name="title" required />
@@ -14,7 +13,4 @@
 
   <button type="submit">Create Recipe</button>
 </form>
-  
-</div>
-
 <%- include('../partials/_footer') %>

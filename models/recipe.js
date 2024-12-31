@@ -4,8 +4,8 @@ const recipeSchema = new mongoose.Schema({
   title: { type: String, required: true },
   ingredients: [String],
   instructions: String,
-  userId: mongoose.Schema.Types.ObjectId, // Optional: Reference to the user
-  image: String, // Optional: URL to the recipe image
+  image: String,
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);

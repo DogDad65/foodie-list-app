@@ -1,4 +1,6 @@
 <%- include('../partials/_navbar') %>
+<link rel="stylesheet" href="/css/styles.css" />
+
 <div class="form-container">
   <h1>Edit Recipe</h1>
   <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST">
