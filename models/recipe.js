@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const recipeSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  title: { type: String, required: true },
   ingredients: [String],
-  instructions: { type: String, required: true },
-  image: { type: String }, // URL or path to an image
-  category: { type: String, default: "General" },
+  instructions: String,
+  userId: mongoose.Schema.Types.ObjectId, // Optional: Reference to the user
+  image: String, // Optional: URL to the recipe image
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);

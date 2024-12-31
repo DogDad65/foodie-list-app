@@ -7,9 +7,10 @@ const Recipe = require("../models/recipe");
 const isSignedIn = require("../middleware/isSignedIn");
 
 // Sign-up page route
-router.get("/sign-up", (req, res) => {
-  res.render("auth/sign-up");
+router.get("/protected-route", isSignedIn, (req, res) => {
+  res.send("You are signed in!");
 });
+
 
 // Sign-in page route
 router.get("/sign-in", (req, res) => {

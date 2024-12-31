@@ -1,65 +1,48 @@
 const express = require("express");
 const session = require("express-session");
-const methodOverride = require("method-override");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const Recipe = require("./models/recipe"); // Import Recipe model
 
-// Import controllers
-const authController = require("./controllers/auth");
+const Recipe = require("./models/recipe");
 const recipesController = require("./controllers/recipes");
-const shoppingListController = require("./controllers/shopping-list");
-const isSignedIn = require("./middleware/isSignedIn");
 
-dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+dotenv.config();
 
-// Middleware setup
+// Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
+app.use(express.static("public"));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "defaultSecret",
     resave: false,
     saveUninitialized: true,
   })
 );
-app.use(express.static("public"));
 
-// MongoDB connection
+// MongoDB Connection
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// Set view engine
+// Set View Engine
 app.set("view engine", "ejs");
 
-// Middleware to pass user to views
+// Middleware to Pass User to Views
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   next();
 });
 
-// Public routes (no `isSignedIn`)
+// Routes
 app.get("/", async (req, res) => {
   try {
-    const recipes = await Recipe.find(); // Fetch recipes for the homepage
-    res.render("index", { recipes }); // Render the homepage with recipes
+    const recipes = await Recipe.find();
+    res.render("index", { recipes });
   } catch (error) {
-    console.error("Error fetching recipes:", error);
-    res.status(500).send("Error loading landing page");
-  }
-});
-
-app.get("/recipes", async (req, res) => {
-  try {
-    const recipes = await Recipe.find(); // Fetch all recipes
-    res.render("recipes/index", { recipes }); // Render the recipes page
-  } catch (error) {
-    console.error("Error fetching recipes:", error);
-    res.status(500).send("Error fetching recipes");
+    console.error("Error fetching homepage recipes:", error);
+    res.status(500).send("Error loading homepage.");
   }
 });
 
@@ -67,12 +50,15 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
-// Private routes (require `isSignedIn`)
-app.use("/auth", authController);
-app.use("/users/:userId/recipes", isSignedIn, recipesController);
-app.use("/users/:userId/shopping-list", isSignedIn, shoppingListController);
+app.use("/recipes", recipesController);
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// 404 Handler
+app.use((req, res) => {
+  res.status(404).send("Page not found.");
+});
+
+// Start Server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });

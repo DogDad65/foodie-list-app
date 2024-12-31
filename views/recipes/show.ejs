@@ -1,28 +1,22 @@
 <%- include('../partials/_navbar') %>
 
-<link rel="stylesheet" href="/css/styles.css">
-
-<!-- views/recipes/show.ejs -->
-<div class="recipe-container">
+<div class="recipe-details">
   <h1><%= recipe.title %></h1>
-
   <h3>Ingredients:</h3>
   <ul>
     <% recipe.ingredients.forEach(ingredient => { %>
       <li><%= ingredient %></li>
     <% }) %>
   </ul>
-
   <h3>Instructions:</h3>
-  <ol>
-    <% recipe.instructions.split('\n').forEach(step => { %>
-      <li><%= step %></li>
-    <% }) %>
-  </ol>
+  <p><%= recipe.instructions %></p>
+
+  <% if (user && recipe.userId && String(user._id) === String(recipe.userId)) { %>
+    <a href="/recipes/<%= recipe._id %>/edit">Edit</a>
+    <form action="/recipes/<%= recipe._id %>?_method=DELETE" method="POST">
+      <button type="submit">Delete</button>
+    </form>
+  <% } %>
 </div>
-<div class="actions">
-    <a href="/users/<%= user._id %>/recipes/<%= recipe._id %>/edit" class="button edit-button">Edit Recipe</a>
-    <a href="/auth/dashboard" class="button">Back to Dashboard</a>
-  </div>
 
 <%- include('../partials/_footer') %>

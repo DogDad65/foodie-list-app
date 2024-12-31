@@ -1,25 +1,23 @@
+<%- include("partials/_navbar") %>
+
 <link rel="stylesheet" href="/css/styles.css" />
-<%- include('partials/_navbar') %>
 
 <div class="landing-page">
-  <div class="logo-container">
-    <img src="/images/logo.png" alt="Holly's Sweet Start Logo" class="landing-logo">
-  </div>
   <h1>Welcome to Holly's Sweet Start!</h1>
-  <p>Your go-to platform for beginner-friendly baking recipes and tips.</p>
   <h2>Featured Recipes</h2>
-  <div class="recipes-grid">
-    <% recipes.forEach(recipe => { %>
-      <div class="recipe-card">
-        <a href="/recipes/<%= recipe._id %>">
-          <img src="<%= recipe.image || '/images/default-recipe.jpg' %>" alt="<%= recipe.name %>" class="recipe-image">
-          <h3><%= recipe.name %></h3>
-        </a>
-        <a href="/recipes/<%= recipe._id %>" class="button-link">View Recipe</a>
-      </div>
-    <% }) %>
-  </div>
+  <% if (recipes.length > 0) { %>
+    <div class="recipes-grid">
+      <% recipes.forEach(recipe => { %>
+        <div class="recipe-card">
+          <img src="<%= recipe.image || '/images/default-recipe.jpg' %>" alt="<%= recipe.title %>" />
+          <h3><%= recipe.title %></h3>
+          <a href="/recipes/<%= recipe._id %>" class="button-link">View Recipe</a>
+        </div>
+      <% }) %>
+    </div>
+  <% } else { %>
+    <p>No recipes available yet. Check back soon!</p>
+  <% } %>
 </div>
 
-
-<%- include('partials/_footer') %>
+<%- include("partials/_footer") %>

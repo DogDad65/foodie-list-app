@@ -3,16 +3,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  realName: { type: String, required: true }, 
+  username: { type: String, required: true },
   password: { type: String, required: true },
+  isAdmin: { type: Boolean, default: false }, // Add admin field
 });
 
-// // Hash password before saving
-// userSchema.pre('save', async function (next) {
-//   if (!this.isModified('password')) return next();
-//   this.password = await bcrypt.hash(this.password, 10);
-//   next();
-// });
-
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
