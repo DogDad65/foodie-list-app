@@ -37,6 +37,66 @@ a:hover {
   color: var(--brand-dark-purple);
 }
 
+/* ===== Form Styles ===== */
+form {
+  display: flex;
+  flex-direction: column; /* Stack form elements vertically */
+  gap: 15px; /* Add spacing between form elements */
+  max-width: 500px; /* Set a max width for the form */
+  margin: 0 auto; /* Center the form horizontally */
+  background-color: var(--brand-white);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--brand-dark-purple);
+  text-align: left;
+}
+
+form input,
+form textarea,
+form button {
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid var(--brand-gray);
+  border-radius: 5px;
+  width: 100%; /* Ensure inputs take the full width */
+}
+
+form textarea {
+  resize: vertical; /* Allow vertical resizing only */
+  min-height: 100px;
+}
+
+form button {
+  background-color: var(--brand-purple);
+  color: var(--brand-white);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: var(--brand-light-purple);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+  form {
+    max-width: 90%; /* Reduce form width on smaller screens */
+    padding: 15px;
+  }
+
+  form label {
+    font-size: 0.9rem;
+  }
+}
+
+
 /* ===== Navbar ===== */
 .navbar {
   display: flex;
@@ -211,9 +271,10 @@ footer a:hover {
 @media (max-width: 600px) {
   .navbar-list {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: center; /* Center align items */
+    gap: 15px; /* Add more spacing for mobile */
   }
 }
+
 
 

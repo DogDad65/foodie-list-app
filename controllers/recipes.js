@@ -1,17 +1,32 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const multer = require("multer");
+const path = require("path");
 const Recipe = require("../models/recipe");
-const { isAdmin } = require("../middleware/auth");
+const { isAdmin, isAuthenticated } = require("../middleware/auth");
+
+// Configure Multer for image uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads/"); // Save images to 'public/uploads'
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Route to render the "New Recipe" form
-router.get("/new", isAdmin, (req, res) => {
+router.get("/new", isAuthenticated, isAdmin, (req, res) => {
   res.render("recipes/new"); // Ensure recipes/new.ejs exists
 });
 
 // Route to create a new recipe
-router.post("/", isAdmin, async (req, res) => {
-  const { title, ingredients, instructions, image } = req.body;
+router.post("/", isAuthenticated, isAdmin, upload.single("image"), async (req, res) => {
+  const { title, ingredients, instructions } = req.body;
+  const image = req.file ? `/uploads/${req.file.filename}` : null; // Use uploaded image or null
 
   // Validate required fields
   if (!title || !ingredients || !instructions) {
@@ -89,9 +104,10 @@ router.get("/:recipeId/edit", isAdmin, async (req, res) => {
 });
 
 // Route to update a recipe
-router.put("/:recipeId", isAdmin, async (req, res) => {
+router.put("/:recipeId", isAdmin, upload.single("image"), async (req, res) => {
   const { recipeId } = req.params;
-  const { title, ingredients, instructions, image } = req.body;
+  const { title, ingredients, instructions } = req.body;
+  const image = req.file ? `/uploads/${req.file.filename}` : req.body.existingImage; // Use uploaded image or existing one
 
   // Validate ObjectId format
   if (!mongoose.Types.ObjectId.isValid(recipeId)) {

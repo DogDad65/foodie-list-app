@@ -1,22 +1,17 @@
-<link rel="stylesheet" href="/css/styles.css">
 <%- include('../partials/_navbar') %>
+<link rel="stylesheet" href="/css/styles.css" />
 
-<!-- Sign-In Page Container -->
-<div class="sign-in-page">
-  <div class="sign-in-container">
-    <form action="/auth/sign-in" method="POST" class="sign-in-form">
-      <h1>Sign In</h1>
-      <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" placeholder="Enter your username" required>
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-      </div>
-      <button type="submit">Sign In</button>
-    </form>
-  </div>
+<div class="login-container">
+  <h1>Admin Login</h1>
+  <form action="/auth/login" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required />
+
+    <button type="submit">Log In</button>
+  </form>
 </div>
 
 <%- include('../partials/_footer') %>
