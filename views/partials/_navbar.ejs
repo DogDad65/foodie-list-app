@@ -4,11 +4,11 @@
   <ul class="navbar-list">
     <li><a href="/">Home</a></li>
     <li><a href="/recipes">Recipes</a></li>
-    <% if (!user) { %>
-      <li><a href="/auth/login">Login</a></li>
-    <% } else { %>
-      <li><a href="/auth/logout">Logout</a></li>
+    <li><a href="/about">About</a></li>
+    <% if (user && user.isAdmin) { %>
+      <li><a href="/admin">Admin Dashboard</a></li>
     <% } %>
   </ul>
+  
 </nav>
 

@@ -2,7 +2,7 @@ function isAuthenticated(req, res, next) {
   if (req.session && req.session.user) {
     return next();
   }
-  res.redirect("/login");
+  res.redirect("/auth/login");
 }
 
 function isAdmin(req, res, next) {

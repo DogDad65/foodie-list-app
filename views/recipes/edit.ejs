@@ -1,31 +1,45 @@
 <%- include('../partials/_navbar') %>
 <link rel="stylesheet" href="/css/styles.css" />
 
-<div class="form-container">
+<div class="dashboard-container">
   <h1>Edit Recipe</h1>
-  <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST" enctype="multipart/form-data"> <!-- Added enctype -->
-    <label for="title">Recipe Title:</label>
-    <input type="text" id="title" name="title" value="<%= recipe.title %>" required />
-
-    <label for="ingredients">Ingredients (one per line):</label>
-    <textarea id="ingredients" name="ingredients" rows="5" required><%= recipe.ingredients.join('\n') %></textarea>
-
-    <label for="instructions">Instructions:</label>
-    <textarea id="instructions" name="instructions" rows="5" required><%= recipe.instructions %></textarea>
-
-    <!-- Display current image -->
-    <% if (recipe.image) { %>
-      <p>Current Image:</p>
-      <img src="<%= recipe.image %>" alt="<%= recipe.title %>" style="max-width: 200px; border-radius: 5px;" />
-    <% } %>
-
-    <!-- File input for new image -->
-    <label for="image">Replace Recipe Image:</label>
-    <input type="file" id="image" name="image" accept="image/*" />
-
-    <!-- Preserve current image if no new image is uploaded -->
-    <input type="hidden" name="existingImage" value="<%= recipe.image %>" />
-
+  
+  <form action="/recipes/<%= recipe._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <!-- Recipe Title -->
+    <div class="form-section">
+      <label for="title">Recipe Title:</label>
+      <input type="text" id="title" name="recipe[title]" value="<%= recipe.title %>" required />
+    </div>
+    
+    <!-- Ingredients -->
+    <div class="form-section">
+      <label for="ingredients">Ingredients (one per line):</label>
+      <textarea id="ingredients" name="recipe[ingredients]" required><%= recipe.ingredients %></textarea>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="form-section">
+      <label for="instructions">Instructions:</label>
+      <textarea id="instructions" name="recipe[instructions]" required><%= recipe.instructions %></textarea>
+    </div>
+    
+    <!-- Current Image -->
+    <div class="form-section">
+      <label>Current Image:</label>
+      <% if (recipe.image) { %>
+        <img src="<%= recipe.image %>" alt="<%= recipe.title %>" class="recipe-image" />
+      <% } else { %>
+        <p>No image uploaded</p>
+      <% } %>
+    </div>
+    
+    <!-- File Upload -->
+    <div class="form-section">
+      <label for="image">Update Image (Optional):</label>
+      <input type="file" id="image" name="image" class="file-input" />
+    </div>
+    
+    <!-- Submit Button -->
     <button type="submit">Update Recipe</button>
   </form>
 </div>

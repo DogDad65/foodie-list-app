@@ -1,0 +1,40 @@
+<%- include('../partials/_navbar') %>
+<link rel="stylesheet" href="/css/styles.css" />
+
+
+
+<div class="dashboard-container">
+  <h1>Admin Dashboard</h1>
+  <a href="/recipes/new" class="button-link">Create New Recipe</a>
+
+  <div class="recipe-cards">
+    <% recipes.forEach(recipe => { %>
+    <div class="recipe-card">
+      <h3 class="recipe-title"><%= recipe.title %></h3>
+
+      <% if (recipe.image) { %>
+      <img
+        src="<%= recipe.image %>"
+        alt="<%= recipe.title %>"
+        class="recipe-image"
+      />
+      <% } else { %>
+      <p class="no-image">No Image Available</p>
+      <% } %>
+
+      <div class="card-actions">
+        <a href="/recipes/<%= recipe._id %>/edit" class="button button-link">Edit</a>
+        <form
+          action="/recipes/<%= recipe._id %>?_method=DELETE"
+          method="POST"
+          class="delete-form"
+        >
+          <button type="submit" class="button delete-button">Delete</button>
+        </form>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>
+
+<%- include('../partials/_footer') %>

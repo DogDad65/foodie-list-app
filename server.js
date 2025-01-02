@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const Recipe = require("./models/recipe");
 const recipesController = require("./controllers/recipes");
 const authRoutes = require("./controllers/auth");
+const adminRoutes = require("./controllers/admin");
 
 const app = express();
 dotenv.config();
@@ -38,6 +39,7 @@ mongoose
 app.set("view engine", "ejs");
 
 // Routes
+// Homepage Route
 app.get("/", async (req, res) => {
   try {
     const recipes = await Recipe.find();
@@ -48,12 +50,16 @@ app.get("/", async (req, res) => {
   }
 });
 
+// About Route
 app.get("/about", (req, res) => {
   res.render("about");
 });
 
 // Authentication Routes
 app.use("/auth", authRoutes);
+
+// Admin Dashboard Routes
+app.use("/", adminRoutes);
 
 // Recipes Routes
 app.use("/recipes", recipesController);
